@@ -5,23 +5,20 @@ permissions:
   contents: read
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      - name: Enable pnpm
-        run: corepack enable && corepack prepare pnpm@8 --activate
+          node-version: '16.20.2'
+      - name: Install pnpm
+        run: npm install --global pnpm@8.15.9
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Show available build commands
-        run: node -e "console.log(JSON.stringify(require('./package.json').scripts,null,2))"
       - name: Build editor
-        run: pnpm run build
-      - name: Locate browser output
-        run: |
-          find . -maxdepth 3 -name index.html -not -path './node_modules/*' -print
+        run: NODE_OPTIONS=--openssl-legacy-provider pnpm run build
+      - name: Find output
+        run: find build dist -maxdepth 2 -name index.html -print 2>/dev/null || true
       - name: Upload browser build
         uses: actions/upload-artifact@v4
         with:
