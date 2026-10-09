@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm install --no-frozen-lockfile
-          pnpm add --no-save react-is@16.13.1
+          pnpm add react-is@16.13.1 --ignore-workspace-root-check
       - name: Build editor
         run: pnpm run build
       - name: Find output
