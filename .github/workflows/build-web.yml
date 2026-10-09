@@ -14,7 +14,9 @@ jobs:
       - name: Install pnpm
         run: npm install --global pnpm@8.15.9
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm add --no-save react-is@16.13.1
       - name: Build editor
         run: pnpm run build
       - name: Find output
