@@ -15,10 +15,9 @@ jobs:
         run: npm install --global pnpm@8.15.9
       - name: Install dependencies
         run: |
-          pnpm install --no-frozen-lockfile
-          pnpm add react-is@16.13.1 --ignore-workspace-root-check
+          pnpm install --no-frozen-lockfile --shamefully-hoist
       - name: Build editor
-        run: pnpm run build
+        run: CI=true pnpm run build
       - name: Find output
         run: find build dist -maxdepth 2 -name index.html -print 2>/dev/null || true
       - name: Upload browser build
